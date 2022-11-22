@@ -23,7 +23,26 @@ CREATE TABLE `kunden` (
   `coach` int(11) DEFAULT NULL,
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
+  `land` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `coach` (`coach`),
-  CONSTRAINT `kunden_ibfk_1` FOREIGN KEY (`coach`) REFERENCES `coaches` (`id`) ON DELETE CASCADE
+  KEY `land` (`land`),
+  CONSTRAINT `kunden_ibfk_1` FOREIGN KEY (`coach`) REFERENCES `coaches` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `kunden_ibfk_2` FOREIGN KEY (`land`) REFERENCES `laender` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+DROP TABLE IF EXISTS `laender`;
+CREATE TABLE `laender` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `land` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+DROP VIEW IF EXISTS `v_get_kunden`;
+CREATE TABLE `v_get_kunden` (`id` int(11), `coach` int(11), `firstname` varchar(100), `lastname` varchar(100), `coach_name` varchar(50), `land_name` varchar(30));
+
+
+DROP TABLE IF EXISTS `v_get_kunden`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_get_kunden` AS select `kunden`.`id` AS `id`,`kunden`.`coach` AS `coach`,`kunden`.`firstname` AS `firstname`,`kunden`.`lastname` AS `lastname`,`coaches`.`name` AS `coach_name`,`laender`.`land` AS `land_name` from ((`kunden` left join `laender` on(`laender`.`id` = `kunden`.`land`)) left join `coaches` on(`coaches`.`id` = `kunden`.`coach`));

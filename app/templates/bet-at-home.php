@@ -10,14 +10,13 @@ $vorname = $matches[1];
 $nachnameErsterBuchstabeMitPunkt = $matches[2];
 $land = $matches[3];
 
+echo "bet-at-home Gewinner des Tages ist: \n\n";
+echo trim($matches[1]) . " " . trim($matches[2]) . " aus " . $land . "\n";
+
 foreach ($kunden as $kunde) {
-	if ($kunde->firstname == $vorname &&
-		$kunde->nachname_erster_buchstabe_mit_punkt == $nachnameErsterBuchstabeMitPunkt
+	if ($kunde->firstname . " " . $kunde->nachname_erster_buchstabe_mit_punkt == $vorname . " " . $nachnameErsterBuchstabeMitPunkt
 	) {
-		echo "bet-at-home Gewinner des Tages ist: \n\n";
-		print_r($kunde);
+		print_treffer($kunde);
 	}
 }
 
-// echo "bet-at-home Gewinner des Tages ist: \n\n";
-// echo trim($matches[1]) . " " . trim($matches[2]) . "\n";
