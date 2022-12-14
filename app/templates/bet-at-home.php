@@ -4,7 +4,7 @@
 $URL = "https://www.bet-at-home.de/de/promotion/winneroftheday/6527";
 $seite = shell_exec("curl -sSl " . $URL);
 
-preg_match('/<strong data-id="todaysWinnerOfTheDay">\s*(\w+)\s*(\w\.)\s*\([0-9\*]+\),\s*(\w+)\s*<\/strong>/', $seite, $matches);
+preg_match('/<strong data-id="todaysWinnerOfTheDay">\s*([\wöäüÖÄÜ]+)\s*([\wöäüÖÄÜ]\.)\s*\([0-9\*]+\),\s*(\w+)\s*<\/strong>/', $seite, $matches);
 
 $vorname = $matches[1];
 $nachnameErsterBuchstabeMitPunkt = $matches[2];
